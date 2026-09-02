@@ -26,19 +26,19 @@ pipeline {
                 '''
             }
         }
-stage('Build Docker Image') {
-    steps {
-        echo '===== BUILDING DOCKER IMAGE ====='
-        sh '''
-            docker build \
-              -t jenkins-automation-lab:${BUILD_NUMBER} .
 
-            echo "Docker image created successfully:"
-            docker images jenkins-automation-lab
-        '''
-    }
-} 
-    }
+        stage('Build Docker Image') {
+            steps {
+                echo '===== BUILDING DOCKER IMAGE ====='
+                sh '''
+                    docker build \
+                      -t jenkins-automation-lab:${BUILD_NUMBER} .
+
+                    echo "Docker image created successfully:"
+                    docker images jenkins-automation-lab
+                '''
+            }
+        }
 
         stage('Deploy Application') {
             steps {
@@ -64,8 +64,10 @@ stage('Build Docker Image') {
                 sh '''
                     sleep 3
                     curl --fail --silent --show-error http://localhost/ > /dev/null
+
                     echo "Health check passed. Application is responding."
                 '''
             }
         }
+    }
 }
