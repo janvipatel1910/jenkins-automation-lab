@@ -6,20 +6,16 @@ The application source code is stored in GitHub. Jenkins monitors the repository
 
 ## Architecture
 
-Developer
-   ↓
-GitHub Repository
-   ↓
-Jenkins CI/CD Pipeline
-   ↓
-Docker Image Build
-   ↓
-Docker Container
-   ↓
-AWS EC2
-   ↓
-Live Web Application
-
+```mermaid
+flowchart LR
+    A[Developer / Mac] -->|Git Push| B[GitHub Repository]
+    B -->|SCM Polling| C[Jenkins on AWS EC2]
+    C --> D[Validate Source]
+    D --> E[Build Docker Image]
+    E --> F[Deploy Docker Container]
+    F --> G[Nginx Web Application]
+    G --> H[Health Check]
+```
 ## Technologies Used
 
 - AWS EC2
